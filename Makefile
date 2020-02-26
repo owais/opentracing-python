@@ -4,7 +4,7 @@ pytest := PYTHONDONTWRITEBYTECODE=1 py.test --tb short -rxs \
 	--cov-config .coveragerc --cov $(project) tests
 
 html_report := --cov-report=html
-test_args := --cov-report xml --cov-report term-missing
+test_args := -v --cov-report xml --cov-report term-missing
 
 .PHONY: clean-pyc clean-build docs clean testbed
 .DEFAULT_GOAL : help
@@ -56,7 +56,7 @@ lint:
 	flake8 $(project) tests
 
 test:
-	$(pytest) $(test_args)
+	$(pytest) -v $(test_args)
 
 testbed:
 	PYTHONDONTWRITEBYTECODE=1 python -m testbed

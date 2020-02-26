@@ -23,18 +23,10 @@ import pytest
 from unittest import TestCase
 
 from tornado import ioloop, version_info
-try:
-    from opentracing.scope_managers.tornado import TornadoScopeManager
-    from opentracing.scope_managers.tornado import tracer_stack_context
-except ImportError:
-    pass
+from opentracing.scope_managers.tornado import TornadoScopeManager
+from opentracing.scope_managers.tornado import tracer_stack_context
 from opentracing.harness.scope_check import ScopeCompatibilityCheckMixin
 
-
-# We don't need run tests in case Tornado>=6, because it became
-# asyncio-based framework and `stack_context` was deprecated.
-@pytest.mark.skipif(version_info >= (6, 0, 0, 0),
-                    reason='skip Tornado >= 6')
 class TornadoCompabilityCheck(TestCase, ScopeCompatibilityCheckMixin):
     def scope_manager(self):
         return TornadoScopeManager()
